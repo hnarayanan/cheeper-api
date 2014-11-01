@@ -20,3 +20,12 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
                   'cheeps_count', 'cheeps_url', 'following_count', 'following_url',
                   'followers_count', 'followers_url', 'stream_url')
         write_only_fields = ('avatar',)
+
+
+class CheepAuthorSerializer(serializers.HyperlinkedModelSerializer):
+
+    avatar_url = serializers.CharField(source='avatar_url', read_only=True)
+
+    class Meta:
+        model = User
+        fields = ('id', 'url', 'name', 'handle', 'avatar_url')
