@@ -1,2 +1,3 @@
 *.py[cod]
 venv
+api/db.sqlite3
