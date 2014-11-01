@@ -5,7 +5,7 @@ from .models import User
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
 
-    thumbnail_url = serializers.CharField(source='thumbnail_url', read_only=True)
+    avatar_url = serializers.CharField(source='avatar_url', read_only=True)
     cheeps_count = serializers.CharField(source='cheeps_count', read_only=True)
     cheeps_url = serializers.HyperlinkedIdentityField(view_name='user-cheeps')
     following_count = serializers.CharField(source='following_count', read_only=True)
@@ -16,7 +16,7 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = User
-        fields = ('id', 'url', 'name', 'handle', 'thumbnail', 'thumbnail_url',
+        fields = ('id', 'url', 'name', 'handle', 'avatar', 'avatar_url',
                   'cheeps_count', 'cheeps_url', 'following_count', 'following_url',
                   'followers_count', 'followers_url', 'stream_url')
-        write_only_fields = ('thumbnail',)
+        write_only_fields = ('avatar',)

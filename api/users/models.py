@@ -10,13 +10,13 @@ class User(AbstractEmailUser):
 
     name = models.CharField(max_length=200)
     handle = models.CharField(max_length=25, unique=True)
-    thumbnail = models.ImageField(upload_to='thumbnails/', blank=True, default='')
+    avatar = models.ImageField(upload_to='avatars/', blank=True, default='')
     is_following = models.ManyToManyField('self', related_name='has_followers',
                                           symmetrical=False, blank=True, null=True)
 
-    def thumbnail_url(self):
-        if self.thumbnail:
-            return 'http://localhost:8000' + self.thumbnail.url
+    def avatar_url(self):
+        if self.avatar:
+            return 'http://localhost:8000' + self.avatar.url
         return ''
 
     def cheeps_count(self):
