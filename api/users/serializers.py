@@ -16,10 +16,11 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = User
-        fields = ('id', 'url', 'name', 'handle', 'avatar', 'avatar_url',
-                  'cheeps_count', 'cheeps_url', 'following_count', 'following_url',
+        fields = ('id', 'url', 'email', 'password', 'name', 'handle',
+                  'avatar', 'avatar_url', 'cheeps_count',
+                  'cheeps_url', 'following_count', 'following_url',
                   'followers_count', 'followers_url', 'stream_url')
-        write_only_fields = ('avatar',)
+        write_only_fields = ('avatar', 'password')
 
 
 class CheepAuthorSerializer(serializers.HyperlinkedModelSerializer):
