@@ -11,6 +11,7 @@ router.register(r'users', UserViewSet)
 router.register(r'cheeps', CheepViewSet)
 
 urlpatterns = patterns('',
+  url(r'^o/', include('oauth2_provider.urls', namespace='oauth2_provider')),
   url(r'^', include(router.urls)),
   url(r'^users/(?P<pk>[0-9]+)/cheeps/$', UserCheepViewSet.as_view({'get': 'list'}), name='user-cheeps'),
   url(r'^users/(?P<pk>[0-9]+)/following/$', UserFollowingViewSet.as_view({'get': 'list', 'post': 'create'}), name='user-following'),
