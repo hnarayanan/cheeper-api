@@ -7,7 +7,7 @@
 | `GET`    | `/users/`                               | Retrieves the list of all users (will be replaced by search)                  | Anyone                           |   OK   |
 | `POST`   | `/users/`                               | Creates a new user, as part of creating a new account                         | Anyone                           |   OK   |
 | `GET`    | `/users/:user-id/`                      | Retrieves details of a specific user                                          | Anyone                           |   OK   |
-| `PATCH`  | `/users/:user-id/`                      | Updates details of the specific user                                          | Logged in as :user-id            |        |
+| `PATCH`  | `/users/:user-id/`                      | Updates details of a specific user (might be replaced by `/my_profile/`       | Logged in as :user-id            |   OK   |
 | `DELETE` | `/users/:user-id/`                      | Deletes a specific user, as part of closing an account                        | Logged in as :user-id            |   OK   |
 | `GET`    | `/cheeps/`                              | Retrieves the list of all cheeps (will be replaced by search)                 | Anyone                           |        |
 | `POST`   | `/cheeps/`                              | Creates a new cheep                                                           | Logged in users                  |        |

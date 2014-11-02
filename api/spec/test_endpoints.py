@@ -71,13 +71,32 @@ class UserAccessTest(RestClientTest):
         self.assertEqual(first_user.status_code, status.HTTP_200_OK)
         self.assertRaises(KeyError, lambda: first_user.data['password'])
 
+    def test_a_user_can_update_themselves(self):
+        self.client.login(email='bob@b.org', password='bb')
+        new_user_data = {'name': 'Beautiful Bob'}
+        response = self.client.patch(self.get_specific_user_url(1), new_user_data)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.data['name'], new_user_data['name'])
+        self.client.logout()
+
+    def test_no_one_else_can_update_a_user(self):
+        # Anonymous requester
+        new_user_data = {'name': 'Beautiful Bob'}
+        response = self.client.patch(self.get_specific_user_url(1), new_user_data)
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+        # Another user
+        self.client.login(email='alex@a.org', password='aa')
+        response = self.client.patch(self.get_specific_user_url(1), new_user_data)
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+        self.client.logout()
+
     def test_a_user_can_delete_themselves(self):
         self.client.login(email='bob@b.org', password='bb')
         response = self.client.delete(self.get_specific_user_url(1))
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
         self.client.logout()
 
-    def test_no_one_can_delete_other_users(self):
+    def test_no_one_else_can_delete_a_user(self):
         # Anonymous requester
         response = self.client.delete(self.get_specific_user_url(1))
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
