@@ -4,7 +4,7 @@ from users.models import User
 from .base import RestClientTest
 
 
-class CoreDataRestClientAccessTest(RestClientTest):
+class UserAccessTest(RestClientTest):
 
     def test_anyone_can_access_the_api(self):
         response = self.client.get(self.server_url)
@@ -13,6 +13,7 @@ class CoreDataRestClientAccessTest(RestClientTest):
     def test_anyone_can_access_all_users(self):
         response = self.client.get(self.server_url + '/users/')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(len(response.data), 4)
 
     def test_anyone_can_create_a_user_with_valid_information(self):
         signup_data = {'email': 'edith@e.org', 'password': 'ee', 'handle': 'edith', 'name': 'Evocative Edith'}
@@ -47,7 +48,7 @@ class CoreDataRestClientAccessTest(RestClientTest):
                 'password': ['This field is required.']}
         self.assertEqual(response.data, data)
 
-    def test_no_one_can_create_a_user_with_bad_information(self):
+    def test_no_one_can_create_a_user_with_bad_email(self):
         signup_data_broken_email = {'email': 'edith', 'password': 'ee', 'handle': 'edith', 'name': 'Evocative Edith'}
         response = self.client.post(self.server_url + '/users/', signup_data_broken_email)
         self.assertEqual(User.objects.count(), 4)
@@ -56,9 +57,7 @@ class CoreDataRestClientAccessTest(RestClientTest):
         self.assertEqual(response.data, data)
 
     def test_anyone_can_access_a_specific_user(self):
-        users = self.client.get(self.server_url + '/users/').data
-        bob_url = users[1]['url']
-        bob = self.client.get(bob_url)
+        bob = self.client.get(self.get_specific_user_url(1))
         self.assertEqual(bob.status_code, status.HTTP_200_OK)
         self.assertEqual(bob.data['email'], 'bob@b.org')
         self.assertEqual(bob.data['handle'], 'bob')
@@ -68,11 +67,25 @@ class CoreDataRestClientAccessTest(RestClientTest):
         self.assertEqual(bob.data['followers_count'], 1)
 
     def test_no_one_can_access_user_passwords(self):
-        users = self.client.get(self.server_url + '/users/').data
-        first_user_url = users[0]['url']
-        first_user = self.client.get(first_user_url)
+        first_user = self.client.get(self.get_specific_user_url())
         self.assertEqual(first_user.status_code, status.HTTP_200_OK)
         self.assertRaises(KeyError, lambda: first_user.data['password'])
+
+    def test_a_user_can_delete_themselves(self):
+        self.client.login(email='bob@b.org', password='bb')
+        response = self.client.delete(self.get_specific_user_url(1))
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+        self.client.logout()
+
+    def test_no_one_can_delete_other_users(self):
+        # Anonymous requester
+        response = self.client.delete(self.get_specific_user_url(1))
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+        # Another user
+        self.client.login(email='alex@a.org', password='aa')
+        response = self.client.delete(self.get_specific_user_url(1))
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+        self.client.logout()
 
     def test_anyone_can_access_all_cheeps(self):
         response = self.client.get(self.server_url + '/cheeps/')

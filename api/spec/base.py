@@ -21,6 +21,10 @@ class RestClientTest(APILiveServerTestCase):
         if cls.server_url == cls.live_server_url:
            APILiveServerTestCase.tearDownClass()
 
+    def get_specific_user_url(self, id=0):
+        users = self.client.get(self.server_url + '/users/')
+        return users.data[id]['url']
+
     def setUp(self):
         alex = User.objects.create_user(email='alex@a.org', password='aa', name='Angry Alex', handle='alex')
         bob = User.objects.create_user(email='bob@b.org', password='bb', name='Bodacious Bob', handle='bob')
