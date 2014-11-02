@@ -101,7 +101,3 @@ class UserAccessTest(RestClientTest):
         response = self.client.delete(self.get_specific_user_url(1))
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
         self.client.logout()
-
-    def test_anyone_can_access_all_cheeps(self):
-        response = self.client.get(self.server_url + '/cheeps/')
-        self.assertEqual(response.status_code, status.HTTP_200_OK)

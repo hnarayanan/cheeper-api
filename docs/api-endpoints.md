@@ -9,8 +9,8 @@
 | `GET`    | `/users/:user-id/`                      | Retrieves details of a specific user                                          | Anyone                           |   OK   |
 | `PATCH`  | `/users/:user-id/`                      | Updates details of a specific user (might be replaced by `/my_profile/`       | Logged in as :user-id            |   OK   |
 | `DELETE` | `/users/:user-id/`                      | Deletes a specific user, as part of closing an account                        | Logged in as :user-id            |   OK   |
-| `GET`    | `/cheeps/`                              | Retrieves the list of all cheeps (will be replaced by search)                 | Anyone                           |        |
-| `POST`   | `/cheeps/`                              | Creates a new cheep                                                           | Logged in users                  |        |
+| `GET`    | `/cheeps/`                              | Retrieves the list of all cheeps (will be replaced by search)                 | Anyone                           |   OK   |
+| `POST`   | `/cheeps/`                              | Creates a new cheep                                                           | Logged in users                  |   OK   |
 | `GET`    | `/cheeps/:cheep-id/`                    | Retrieves details of a specific cheep                                         | Anyone                           |        |
 | `PATCH`  | `/cheeps/:cheep-id/`                    | Updates details of a specific cheep                                           | Logged in as author of :cheep-id |        |
 | `DELETE` | `/cheeps/:cheep-id/`                    | Deletes a specific cheep                                                      | Logged in as author of :cheep-id |        |
