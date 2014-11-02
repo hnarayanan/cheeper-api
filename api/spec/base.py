@@ -25,6 +25,10 @@ class RestClientTest(APILiveServerTestCase):
         users = self.client.get(self.server_url + '/users/')
         return users.data[id]['url']
 
+    def get_specific_cheep_url(self, id=0):
+        cheeps = self.client.get(self.server_url + '/cheeps/')
+        return cheeps.data[id]['url']
+
     def setUp(self):
         alex = User.objects.create_user(email='alex@a.org', password='aa', name='Angry Alex', handle='alex')
         bob = User.objects.create_user(email='bob@b.org', password='bb', name='Bodacious Bob', handle='bob')

@@ -79,11 +79,15 @@ class UserAccessTest(RestClientTest):
         # Anonymous requester
         new_user_data = {'name': 'Beautiful Bob'}
         response = self.client.patch(self.get_specific_user_url(1), new_user_data)
+        data = {'detail': 'Authentication credentials were not provided.'}
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+        self.assertEqual(response.data, data)
         # Another user
         self.client.login(email='alex@a.org', password='aa')
         response = self.client.patch(self.get_specific_user_url(1), new_user_data)
+        data = {'detail': 'You do not have permission to perform this action.'}
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+        self.assertEqual(response.data, data)
         self.client.logout()
 
     def test_a_user_can_delete_themselves(self):
@@ -95,9 +99,13 @@ class UserAccessTest(RestClientTest):
     def test_no_one_else_can_delete_a_user(self):
         # Anonymous requester
         response = self.client.delete(self.get_specific_user_url(1))
+        data = {'detail': 'Authentication credentials were not provided.'}
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+        self.assertEqual(response.data, data)
         # Another user
         self.client.login(email='alex@a.org', password='aa')
         response = self.client.delete(self.get_specific_user_url(1))
+        data = {'detail': 'You do not have permission to perform this action.'}
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+        self.assertEqual(response.data, data)
         self.client.logout()
