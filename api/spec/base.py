@@ -1,9 +1,9 @@
 import sys
 
-from django.core.urlresolvers import reverse
-
 from rest_framework.test import APILiveServerTestCase
 
+from users.models import User
+from cheeps.models import Cheep
 
 class RestClientTest(APILiveServerTestCase):
 
@@ -21,17 +21,18 @@ class RestClientTest(APILiveServerTestCase):
         if cls.server_url == cls.live_server_url:
            APILiveServerTestCase.tearDownClass()
 
-    def endpoint(self, resource=''):
-        base_path = '/v1/'
-        endpoint = self.server_url + base_path
-        if resource != '':
-            endpoint = endpoint + resource + '/'
-        return endpoint
-
     def setUp(self):
-        # Setup users and cheeps here
-        pass
+        alex = User.objects.create_user(email='alex@a.org', password='aa', name='Angry Alex', handle='alex')
+        bob = User.objects.create_user(email='bob@b.org', password='bb', name='Bodacious Bob', handle='bob')
+        cathy = User.objects.create_user(email='cathy@c.org', password='cc', name='Curious Catherine', handle='cathy')
+        diana = User.objects.create_user(email='diana@d.org', password='dd', name='Delicious Diana', handle='diana')
 
+        alex.is_following = [bob, cathy, diana]
+        alex.save()
+        bob.is_following = [alex, diana]
+        bob.save()
+        diana.is_following = [alex]
+        diana.save()
 
     def tearDown(self):
         pass
