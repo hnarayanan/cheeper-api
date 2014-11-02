@@ -6,10 +6,6 @@ from .base import RestClientTest
 
 class UserAccessTest(RestClientTest):
 
-    def test_anyone_can_access_the_api(self):
-        response = self.client.get(self.server_url)
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
-
     def test_anyone_can_access_all_users(self):
         response = self.client.get(self.server_url + '/users/')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
@@ -62,7 +58,7 @@ class UserAccessTest(RestClientTest):
         self.assertEqual(bob.data['email'], 'bob@b.org')
         self.assertEqual(bob.data['handle'], 'bob')
         self.assertEqual(bob.data['name'], 'Bodacious Bob')
-        self.assertEqual(bob.data['cheeps_count'], 0)
+        self.assertEqual(bob.data['cheeps_count'], 3)
         self.assertEqual(bob.data['following_count'], 2)
         self.assertEqual(bob.data['followers_count'], 1)
 

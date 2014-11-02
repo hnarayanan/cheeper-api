@@ -14,7 +14,7 @@ class Cheep(models.Model):
     content = models.CharField(max_length=140)
 
     def __unicode__(self):
-        return self.content
+        return '%s: %s' % (self.author, self.content)
 
     class Meta:
         ordering = ('-modified',)

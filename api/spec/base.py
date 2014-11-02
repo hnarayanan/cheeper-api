@@ -38,5 +38,17 @@ class RestClientTest(APILiveServerTestCase):
         diana.is_following = [alex]
         diana.save()
 
+        Cheep.objects.create(author=alex, content='It was supposed to be called the Pod but Steve Jobs was still getting the hang of Vim.')
+        Cheep.objects.create(author=bob, content='Hi! I\'m Bob!')
+        Cheep.objects.create(author=bob, content='What\'s going on?')
+        Cheep.objects.create(author=alex, content='Raisin cookies that look like chocolate chip cookies are the main reason I have trust issues.')
+        Cheep.objects.create(author=diana, content='This is my first post.')
+        Cheep.objects.create(author=alex, content='#1: Advice for a daughter depends almost entirely on how attractive she is.')
+        Cheep.objects.create(author=alex, content='Always keep your skills sharp. Or, as Jay-Z might say, "Ya slackin on your pimpin, turn it up."')
+        Cheep.objects.create(author=diana, content='This is my first second!')
+        Cheep.objects.create(author=alex, content='I am basically just refreshing websites until I fucking die I guess.')
+        Cheep.objects.create(author=bob, content='Hello, is this thing on?')
+
+
     def tearDown(self):
         pass
