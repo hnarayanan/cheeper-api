@@ -11,9 +11,9 @@
 | `DELETE` | `/users/:user-id/`                      | Deletes a specific user, as part of closing an account                        | Logged in as :user-id            |   OK   |
 | `GET`    | `/cheeps/`                              | Retrieves the list of all cheeps (will be replaced by search)                 | Anyone                           |   OK   |
 | `POST`   | `/cheeps/`                              | Creates a new cheep                                                           | Logged in users                  |   OK   |
-| `GET`    | `/cheeps/:cheep-id/`                    | Retrieves details of a specific cheep                                         | Anyone                           |        |
-| `PATCH`  | `/cheeps/:cheep-id/`                    | Updates details of a specific cheep                                           | Logged in as author of :cheep-id |        |
-| `DELETE` | `/cheeps/:cheep-id/`                    | Deletes a specific cheep                                                      | Logged in as author of :cheep-id |        |
+| `GET`    | `/cheeps/:cheep-id/`                    | Retrieves details of a specific cheep                                         | Anyone                           |   OK   |
+| `PATCH`  | `/cheeps/:cheep-id/`                    | Updates details of a specific cheep                                           | Logged in as author of :cheep-id |   OK   |
+| `DELETE` | `/cheeps/:cheep-id/`                    | Deletes a specific cheep                                                      | Logged in as author of :cheep-id |   OK   |
 | `GET`    | `/users/:user-id/cheeps/`               | Retrieve the list of `:user-id`'s cheeps                                      | Anyone                           |        |
 | `GET`    | `/users/:user-id/following/`            | Retrieves the list of users that `:user-id` is following                      | Logged in users                  |        |
 | `POST`   | `/users/:user-id/following/`            | Adds user to the list that `:user-id` is following                            | Logged in as :user-id            |        |
